@@ -1,13 +1,13 @@
 class Solution {
 public:
-    bool isValid(vector<int>& bloomDay,int m,int k,int day){
+    bool isValid(vector<int>& bloomDay,int m,int k,int curday){
         int count=0,streak=0;
-        for(int num:bloomDay){
-            if(day>=num){
+        for(int day:bloomDay){
+            if(curday>=day){
                 streak++;
                 if(streak==k){
                     count++;
-                    streak=0;
+                    streak=0;//reset
                 }
             }
             else    streak=0;
@@ -24,7 +24,7 @@ public:
                 right=mid-1;
                 ans=mid;
             }
-            else            left=mid+1;
+            else    left=mid+1;
         }
         return ans;
     }
