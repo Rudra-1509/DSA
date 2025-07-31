@@ -1,17 +1,16 @@
 class Solution {
 public:
     bool isValid(vector<int>& bloomDay,int m,int k,int day){
-        int count=0;
-        vector<int> vec;
+        int count=0,streak=0;
         for(int num:bloomDay){
             if(day>=num){
-                vec.push_back(num);
-                if(vec.size()==k){
+                streak++;
+                if(streak==k){
                     count++;
-                    vec.clear();
+                    streak=0;
                 }
             }
-            else    vec.clear();    
+            else    streak=0;
         }
         return count>=m;
     }
