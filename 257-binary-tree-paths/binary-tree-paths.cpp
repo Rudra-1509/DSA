@@ -13,12 +13,10 @@ class Solution {
 public:
     void helper(TreeNode* root,vector<string>& res,string path){
         if(!root)   return;
-        path+=to_string(root->val)+"->";
-        if(!root->left && !root->right){
-            path.pop_back();
-            path.pop_back();
+        path+=to_string(root->val);
+        if(!root->left && !root->right)
             res.push_back(path);
-        }
+        path+="->";
         helper(root->left,res,path);
         helper(root->right,res,path);
     }
