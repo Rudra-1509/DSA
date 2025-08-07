@@ -11,21 +11,21 @@
  */
 class Solution {
 public:
-    long long totalSum=0;
-    long long ans=INT_MIN;
     const int MOD=1e9+7;
-    long long getSum(TreeNode* root){
+    long long getSum(TreeNode* root,long long& totalSum,long long& ans){
         if(!root)   return 0;
-        long long lsum=getSum(root->left);
-        long long rsum=getSum(root->right);
+        long long lsum=getSum(root->left,totalSum,ans);
+        long long rsum=getSum(root->right,totalSum,ans);
         long long curSum=root->val+lsum+rsum;
         ans=max(ans,(totalSum-curSum)*curSum);
         return curSum;
     }
     int maxProduct(TreeNode* root){
         if(!root)   return 0;
-        totalSum=getSum(root);
-        getSum(root);
+        long long totalSum=0;
+        long long ans=INT_MIN;
+        totalSum=getSum(root,totalSum,ans);
+        getSum(root,totalSum,ans);
         return ans%MOD;
     }
 };
