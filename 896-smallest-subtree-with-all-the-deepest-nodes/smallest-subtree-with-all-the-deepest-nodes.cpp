@@ -37,6 +37,7 @@ public:
     }
 
     TreeNode* subtreeWithAllDeepest(TreeNode* root) {
+        if(!root)   return nullptr;
         vector<TreeNode*> vec;
         int maxHeight=height(root);
         helper(root,1,maxHeight,vec);
