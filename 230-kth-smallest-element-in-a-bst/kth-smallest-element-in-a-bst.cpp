@@ -14,16 +14,14 @@ public:
     void inorder(TreeNode* root,int k,int& cur,int& ans){
         if(!root)   return;
         inorder(root->left,k,cur,ans);
-        cur++;
         if(k==cur){
             ans=root->val;
-            return;
         }
-
+        cur++;
         inorder(root->right,k,cur,ans);
     }
     int kthSmallest(TreeNode* root, int k) {
-        int ans=-1,cur=0;
+        int ans=-1,cur=1;
         inorder(root,k,cur,ans);
         return ans;
     }
