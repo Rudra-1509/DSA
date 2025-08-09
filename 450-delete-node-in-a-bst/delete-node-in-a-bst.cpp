@@ -12,7 +12,7 @@
 class Solution {
 public:
     TreeNode* getMin(TreeNode* root){
-        if(!root->left)    return root;
+        if(!root->left) return root;
         return getMin(root->left);
     }
     TreeNode* deleteNode(TreeNode* root, int key) {
@@ -21,8 +21,8 @@ public:
         else if(key>root->val)   root->right=deleteNode(root->right,key);
         else{
             if(!root->left && !root->right){
-            delete root;
-            return nullptr;
+                delete root;
+                return nullptr;
             }
             else if(!root->left){
                 TreeNode* temp=root->right;
@@ -34,9 +34,12 @@ public:
                 delete root;
                 return temp;
             }
-            TreeNode* successor= getMin(root->right);    
-            root->val=successor->val;
-            root->right=deleteNode(root->right,root->val);
+            else{
+                TreeNode* successor=getMin(root->right);
+                root->val=successor->val;
+                root->right=deleteNode(root->right,root->val);
+                return root;
+            }
         }
         return root;
     }
