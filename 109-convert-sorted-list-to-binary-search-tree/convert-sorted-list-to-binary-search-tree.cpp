@@ -21,26 +21,21 @@
  */
 class Solution {
 public:
-    ListNode* findMiddle(ListNode* head){
-        if(!head)   return nullptr;
-        ListNode *slow=head,*fast=head,*prev=nullptr;
-        while(fast && fast->next){
-            fast=fast->next->next;
-            prev=slow;
-            slow=slow->next;
-        }
-        if(prev) prev->next=nullptr;
-        return slow;
-    }
-    TreeNode* helper(ListNode* head){
-        if(!head)   return nullptr;
-        ListNode* mid=findMiddle(head);
-        TreeNode* root=new TreeNode(mid->val);
-        root->left=(head==mid)?nullptr:helper(head);
-        root->right=helper(mid->next);
+    TreeNode* helper(ListNode*& head,int left,int right){
+        if(left>right)  return nullptr;
+        int mid=left+(right-left)/2;
+        TreeNode* leftSide=helper(head,left,mid-1);
+        TreeNode* root=new TreeNode(head->val);
+        root->left=leftSide;
+        head=head->next;
+        root->right=helper(head,mid+1,right);
         return root;
     }
+
     TreeNode* sortedListToBST(ListNode* head) {
-        return helper(head);
+        int size=0;
+        for(ListNode* cur=head;cur;cur=cur->next)
+            size++;
+        return helper(head,0,size-1);
     }
 };
