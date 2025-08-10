@@ -13,7 +13,7 @@ class Solution {
 public:
     int curfreq=0;
     int maxfreq=0;
-    int prev=-1;
+    int prev=INT_MIN;
     void inorder(TreeNode* root,vector<int>& res){
         if(!root)   return;
         inorder(root->left,res);
