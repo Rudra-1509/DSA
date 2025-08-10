@@ -39,6 +39,7 @@ class Solution {
 public:
 
     bool findTarget(TreeNode* root, int k) {
+        if(!root)   return false;
         BSTiterator l(root,true);
         BSTiterator r(root,false);
         int i=l.next(),j=r.next();
