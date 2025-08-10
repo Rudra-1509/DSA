@@ -29,7 +29,7 @@ public:
             prev=slow;
             slow=slow->next;
         }
-        if(prev && prev->next) prev->next=nullptr;
+        if(prev) prev->next=nullptr;
         return slow;
     }
     TreeNode* helper(ListNode* head){
