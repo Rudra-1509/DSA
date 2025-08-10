@@ -37,7 +37,7 @@ public:
         ListNode* mid=findMiddle(head);
         TreeNode* root=new TreeNode(mid->val);
         root->left=(head==mid)?nullptr:helper(head);
-        root->right=(head==mid)?nullptr:helper(mid->next);
+        root->right=helper(mid->next);
         return root;
     }
     TreeNode* sortedListToBST(ListNode* head) {
