@@ -9,7 +9,7 @@ public:
         for(int i=0;i<4;i++){
             int newr=r+nav[i][0];
             int newc=c+nav[i][1];
-            if(isValid(newr,newc,m,n) && !visited[newr][newc] && grid[r][c]=='1')
+            if(isValid(newr,newc,m,n) && !visited[newr][newc] && grid[newr][newc]=='1')
                 dfs(grid,newr,newc,visited,m,n);
         }
     }
@@ -37,7 +37,8 @@ public:
         for(int i=0;i<m;i++){
             for(int j=0;j<n;j++){
                 if(!visited[i][j] && grid[i][j]=='1'){
-                    bfs(grid,i,j,visited,m,n);
+                    //bfs(grid,i,j,visited,m,n);
+                    dfs(grid,i,j,visited,m,n);
                     count++;
                 }
             }
