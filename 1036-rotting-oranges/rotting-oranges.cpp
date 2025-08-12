@@ -8,7 +8,7 @@ public:
     int orangesRotting(vector<vector<int>>& grid) {
         m=grid.size(),n=grid[0].size();
         queue<pair<int,int>> q;
-        vector<vector<int>> nav={{0,1},{0,-1},{1,0},{-1,0}};
+        static vector<vector<int>> nav={{0,1},{0,-1},{1,0},{-1,0}};
         int time=-1,freshOranges=0;
         //push level 0 rotten oranges
         for(int i=0;i<m;i++){
@@ -19,7 +19,7 @@ public:
                     freshOranges++;
             }
         }
-        //if there are no rotten oranges return 0;
+        //if there are no rotten oranges or there are no oranges at all
         if(q.empty() && freshOranges)   return -1;
         if(q.empty())   return 0;
         //start bfs
