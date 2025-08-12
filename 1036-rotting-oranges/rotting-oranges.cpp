@@ -41,7 +41,7 @@ public:
         }
 
 
-        return freshOranges==0? time:-1;
+        return freshOranges? -1:time;
        
     }
 };
