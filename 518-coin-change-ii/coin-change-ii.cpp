@@ -1,6 +1,5 @@
 class Solution {
 public:
-    static const int MOD=1e9+7;
     int change(int amount, vector<int>& coins) {
         int n=coins.size();
         vector<vector<unsigned long long>> dp(n+1,vector<unsigned long long>(amount+1,0));
