@@ -18,7 +18,7 @@ public:
         // int curSum=root->val+leftSum+rightSum;
         // maxSum=max(maxSum,curSum);
         // return root->val+max(leftSum,rightSum);
-        int temp=max(root->val+max(leftSum,rightSum),root->val);
+        int temp=root->val+max(leftSum,rightSum);
         int ans=root->val+leftSum+rightSum;
         maxSum=max(ans,maxSum);
         return (temp<0)?0: temp;
