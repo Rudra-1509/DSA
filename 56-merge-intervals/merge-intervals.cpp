@@ -5,12 +5,13 @@ public:
      sort(intervals.begin(),intervals.end());
      res.push_back(intervals[0]);
      for(int i=1;i<intervals.size();i++){
-        int start=intervals[i][0],end=intervals[i][1];
+        auto& curr=intervals[i];
+        int start=curr[0],end=curr[1];
         auto& lastIv=res.back();
         if(start<=lastIv[1]){
             lastIv[1]=max(end,lastIv[1]);
         }
-        else res.push_back(intervals[i]);
+        else res.push_back(curr);
      }
      return res;   
     }
