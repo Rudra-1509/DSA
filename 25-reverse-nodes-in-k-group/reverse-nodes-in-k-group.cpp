@@ -21,6 +21,7 @@ public:
             return prev; 
         }
     ListNode* reverseKGroup(ListNode* head, int k) {
+        if(!head)   return nullptr;
         ListNode* cur=head;
         for(int i=0;i<k;i++){
             if(!cur)    return head;
@@ -35,9 +36,10 @@ public:
             if(grpMemCount==k){ 
                 ListNode *nextGrpHead=cur->next; 
                 cur->next=nullptr; 
-                rev(curGrpHead); 
-                if(prevGrpTail) prevGrpTail->next=cur; 
-                else newHead=cur; 
+                if(prevGrpTail) prevGrpTail->next=nullptr;
+                ListNode*revHead=rev(curGrpHead); 
+                if(prevGrpTail) prevGrpTail->next=revHead; 
+                else newHead=revHead; 
                 curGrpHead->next=nextGrpHead; 
                 prevGrpTail=curGrpHead; 
                 cur=curGrpHead; 
