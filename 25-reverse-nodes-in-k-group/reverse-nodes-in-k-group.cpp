@@ -36,10 +36,9 @@ public:
             if(grpMemCount==k){ 
                 ListNode *nextGrpHead=cur->next; 
                 cur->next=nullptr; 
-                if(prevGrpTail) prevGrpTail->next=nullptr;
-                ListNode*revHead=rev(curGrpHead); 
-                if(prevGrpTail) prevGrpTail->next=revHead; 
-                else newHead=revHead; 
+                rev(curGrpHead); 
+                if(prevGrpTail) prevGrpTail->next=cur; 
+                else newHead=cur; 
                 curGrpHead->next=nextGrpHead; 
                 prevGrpTail=curGrpHead; 
                 cur=curGrpHead; 
