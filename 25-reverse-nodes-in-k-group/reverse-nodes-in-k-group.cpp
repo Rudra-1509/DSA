@@ -21,7 +21,6 @@ public:
             return prev; 
         }
     ListNode* reverseKGroup(ListNode* head, int k) {
-        if(!head)   return nullptr;
         ListNode* cur=head;
         for(int i=0;i<k;i++){
             if(!cur)    return head;
