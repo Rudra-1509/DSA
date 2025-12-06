@@ -19,11 +19,11 @@ public:
         ListNode* ptr=head;
         for(int i=0;i<count-k-1;i++)    ptr=ptr->next;
         ListNode* newHead=ptr->next;
-        ListNode* newTail=ptr;
-        while(ptr->next)    ptr=ptr->next;
-        ListNode* oldTail=ptr;
 
-        newTail->next=nullptr;
+        ptr->next=nullptr;
+        ListNode* oldTail=newHead;
+        while(oldTail->next)    oldTail=oldTail->next;
+        
         oldTail->next=head;
         return newHead;
     }
