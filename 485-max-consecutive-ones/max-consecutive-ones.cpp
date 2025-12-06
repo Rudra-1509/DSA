@@ -4,7 +4,7 @@ public:
         int left=0,maxlen=0,count=0;
         for(int right=left;right<nums.size();right++){
             if(nums[right]==1)   count++;
-            else if(nums[right]==0 || right==nums.size()){
+            else if(nums[right]==0){
                 maxlen=max(maxlen,count);
                 left=right+1;
                 count=0;
