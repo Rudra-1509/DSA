@@ -9,6 +9,7 @@ public:
         }
 
         for(int i=ind;i<candidates.size();i++){
+            if(target<candidates[i]) break;
             path.push_back(candidates[i]);
             helper(candidates,i,target-candidates[i],path,result);
             path.pop_back();
@@ -18,6 +19,7 @@ public:
     vector<vector<int>> combinationSum(vector<int>& candidates, int target) {
         vector<vector<int>> result;
         vector<int> path;
+        sort(candidates.begin(),candidates.end());
         helper(candidates,0,target,path,result);
         return result;
     }
