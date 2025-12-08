@@ -2,7 +2,7 @@ class Solution {
 public:
     void helper(vector<int>& candidates,int ind, int target,
     vector<int>& path,vector<vector<int>>& result){
-        if(ind >= candidates.size() || target < 0)    return;
+        if(target < 0)    return;
         if(target==0){
             result.push_back(path);
             return;
