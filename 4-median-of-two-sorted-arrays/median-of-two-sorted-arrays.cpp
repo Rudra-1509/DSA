@@ -1,24 +1,27 @@
 class Solution {
 public:
     double findMedianSortedArrays(vector<int>& nums1, vector<int>& nums2) {
-        int m=nums1.size();
-        int n=nums2.size();
+        int m=nums1.size(),n=nums2.size();
         if(m>n) return findMedianSortedArrays(nums2,nums1);
-        int left=0,right=m;
-        while(left<=right){
-            int mid1=left+(right-left)/2;
-            int mid2=(m+n+1)/2-mid1;
-            int l1=(mid1-1>=0)?nums1[mid1-1]:INT_MIN;
-            int l2=(mid2-1>=0)?nums2[mid2-1]:INT_MIN;
-            int r1=(mid1<m)?nums1[mid1]:INT_MAX;
-            int r2=(mid2<n)?nums2[mid2]:INT_MAX;
-            if(l1<=r2 && l2<=r1){
-                if((m+n)%2==0)
-                    return (max(l1,l2)+min(r1,r2))/2.0;
-                else    return max(l1,l2);
+        int l=0,r=m;
+        while(l<=r){
+            int i=(l+r)/2;
+            int j=(m+n)/2 -i;
+            int AL=(i>0)?  nums1[i-1] : INT_MIN;
+            int AR=(i<m)? nums1[i]:INT_MAX;
+            int BL=(j>0)?  nums2[j-1] : INT_MIN;
+            int BR=(j<n)? nums2[j]:INT_MAX;
+
+            if(AL<=BR && BL<=AR){
+                if((m+n)%2==0)  return (max(AL,BL)+min(AR,BR))/2.0;
+                else            return min(AR,BR);
             }
-            else if(l1>r2)      right=mid1-1;
-            else                left=mid1+1;
+            else if(AL>BR){
+                r=i-1;
+            }
+            else{
+                l=i+1;
+            }
         }
         return 0.0;
     }
