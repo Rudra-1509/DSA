@@ -1,10 +1,17 @@
 class Solution {
+private:
+    // struct compare{
+    //     bool operator()(const pair<int,int>& a,const pair<int,int>& b){
+    //         return a.first>b.first;
+    //     }
+    // };
 public:
     vector<int> topKFrequent(vector<int>& nums, int k) {
         unordered_map<int,int> mpp;
         for(int num:nums){
             mpp[num]++;
         }
+        // priority_queue<pair<int,int>,vector<pair<int,int>>,compare> pq;
         priority_queue<pair<int,int>,vector<pair<int,int>>,greater<pair<int,int>>> pq;
         for(auto it:mpp){
             pq.push({it.second,it.first});
