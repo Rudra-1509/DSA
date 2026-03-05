@@ -13,8 +13,9 @@ class Solution {
 public:
     int ans=0;
     void helper(TreeNode* root,int depth){
-        if(!root){
-            ans=max(ans,depth-1);
+        if(!root)   return;
+        if(!root->left && !root->right){
+            ans=max(ans,depth);
             return;
         }
         helper(root->left,depth+1);
