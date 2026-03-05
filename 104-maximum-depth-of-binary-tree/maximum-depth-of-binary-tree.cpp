@@ -11,10 +11,18 @@
  */
 class Solution {
 public:
+    void helper(TreeNode* root,int depth,int& ans){
+        if(!root){
+            ans=max(ans,depth-1);
+            return;
+        }
+        helper(root->left,depth+1,ans);
+        helper(root->right,depth+1,ans);
+    }
     int maxDepth(TreeNode* root) {
         if(!root)   return 0;
-        int lh=maxDepth(root->left);
-        int rh=maxDepth(root->right);
-        return 1+max(lh,rh);
+        int ans=0;
+        helper(root,1,ans);
+        return ans;
     }
 };
