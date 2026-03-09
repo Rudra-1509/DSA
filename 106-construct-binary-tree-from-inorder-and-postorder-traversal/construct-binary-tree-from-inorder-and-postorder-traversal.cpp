@@ -14,12 +14,14 @@ public:
     TreeNode* helper(vector<int>& inorder,int inStart,int inEnd,
     vector<int>& postorder,int postStart,int postEnd,unordered_map<int,int>& mpp){
         if(inStart>inEnd || postStart>postEnd)  return nullptr;
-        TreeNode* root=new TreeNode(postorder[postEnd]);
-        int rootIdxIn=mpp[root->val];
-        int numsRight=inEnd-rootIdxIn;
-        root->left=helper(inorder,inStart,rootIdxIn-1,postorder,postStart,postEnd-numsRight-1,mpp);
-        root->right=helper(inorder,rootIdxIn+1,inEnd,postorder,postEnd-numsRight,postEnd-1,mpp);
-        return root;
+        TreeNode* cur=new TreeNode(postorder[postEnd]);
+        int idxIn=mpp[cur->val];
+        int leftCount=idxIn-inStart;
+        cur->left=
+            helper(inorder,inStart,idxIn-1,postorder,postStart,postStart+leftCount-1,mpp);
+        cur->right=
+            helper(inorder,idxIn+1,inEnd,postorder,postStart+leftCount,postEnd-1,mpp);
+        return cur;
     }
     TreeNode* buildTree(vector<int>& inorder, vector<int>& postorder) {
         unordered_map<int,int> mpp;
