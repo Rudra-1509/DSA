@@ -9,45 +9,41 @@
  *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
  * };
  */
-
-class BSTiterator{
-    public:
-        stack<TreeNode*> st;
-        bool ascend;
-        BSTiterator(TreeNode* root,bool flag){
-            ascend=flag;
-            pushAll(root);
-        }
-
-        void pushAll(TreeNode* root){
-            while(root){
-                st.push(root);
-                if(ascend)  root=root->left;
-                else        root=root->right;
-            }
-        }
-
-        int next(){
-            TreeNode* temp=st.top();st.pop();
-            if(ascend)  pushAll(temp->right);
-            else        pushAll(temp->left);
-            return temp->val;
-        }
-};
-
 class Solution {
 public:
-
+    stack<TreeNode*> lRr,rRl;
+    void pushAllLeft(TreeNode* cur){
+        while(cur){
+            lRr.push(cur);
+            cur=cur->left;
+        }
+    }
+    int next(){
+        TreeNode* root=lRr.top();lRr.pop();
+        pushAllLeft(root->right);
+        return root->val;
+    }
+    void pushAllRight(TreeNode* cur){
+        while(cur){
+            rRl.push(cur);
+            cur=cur->right;
+        }
+    }
+    int prev(){
+        TreeNode* root=rRl.top();rRl.pop();
+        pushAllRight(root->left);
+        return root->val;        
+    }
     bool findTarget(TreeNode* root, int k) {
-        if(!root)   return false;
-        BSTiterator l(root,true);
-        BSTiterator r(root,false);
-        int i=l.next(),j=r.next();
-        while(i<j){
-            int sum=i+j;
-            if(sum<k)   i=l.next();
-            else if(sum>k)  j=r.next();
-            else return true;
+        pushAllLeft(root);
+        pushAllRight(root);
+        int low=next();
+        int high=prev();
+        while(low<high){
+            int sum=low+high;
+            if(sum==k)      return true;
+            else if(sum<k)  low=next();
+            else high=prev();
         }
         return false;
     }
