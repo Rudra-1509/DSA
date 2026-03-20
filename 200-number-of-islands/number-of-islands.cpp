@@ -1,46 +1,34 @@
 class Solution {
 public:
-    bool isValid(int r,int c,int m,int n){
-        return (r>=0 && r<m && c>=0 && c<n);
+    int r,c;
+    vector<vector<int>> nav={{0,1},{0,-1},{1,0},{-1,0}};
+    bool isSafe(int i,int j){
+        return i>=0 && i<r && j>=0 && j<c;
     }
-    void dfs(vector<vector<char>>& grid,int r,int c,vector<vector<bool>>& visited,int m,int n){
-        visited[r][c]=true;
-        vector<vector<int>> nav={{0,1},{0,-1},{1,0},{-1,0}};
-        for(int i=0;i<4;i++){
-            int newr=r+nav[i][0];
-            int newc=c+nav[i][1];
-            if(isValid(newr,newc,m,n) && !visited[newr][newc] && grid[newr][newc]=='1')
-                dfs(grid,newr,newc,visited,m,n);
-        }
-    }
-    void bfs(vector<vector<char>>& grid,int r,int c,vector<vector<bool>>& visited,int m,int n){
-        queue<pair<int,int>> q;
-        q.push({r,c});
-        visited[r][c]=true;
-        while(!q.empty()){
-            pair<int,int> cur=q.front();q.pop();
-            vector<vector<int>> nav={{0,1},{0,-1},{1,0},{-1,0}};
-            for(int i=0;i<4;i++){
-            int newr=cur.first+nav[i][0];
-            int newc=cur.second+nav[i][1];
-            if(isValid(newr,newc,m,n) && !visited[newr][newc] && grid[newr][newc]=='1'){
-                q.push({newr,newc});
-                visited[newr][newc]=true;
-                }
-            }
+    void dfs(int i,int j,vector<vector<char>>& grid){
+        grid[i][j]='V';
+        for(int k=0;k<4;k++){
+            int newi=i+nav[k][0];
+            int newj=j+nav[k][1];
+            if(isSafe(newi,newj) && grid[newi][newj]=='1')
+                dfs(newi,newj,grid);
         }
     }
     int numIslands(vector<vector<char>>& grid) {
-        int m=grid.size(),n=grid[0].size();
-        vector<vector<bool>> visited(m,vector<bool>(n,false));
+        r=grid.size(),c=grid[0].size();
         int count=0;
-        for(int i=0;i<m;i++){
-            for(int j=0;j<n;j++){
-                if(!visited[i][j] && grid[i][j]=='1'){
-                    //bfs(grid,i,j,visited,m,n);
-                    dfs(grid,i,j,visited,m,n);
-                    count++;
+        for(int i=0;i<r;i++){
+            for(int j=0;j<c;j++){
+                if(grid[i][j]=='1'){
+                count++;
+                dfs(i,j,grid);
                 }
+            }
+        }
+        for(int i=0;i<r;i++){
+            for(int j=0;j<c;j++){
+                if(grid[i][j]=='V')
+                    grid[i][j]='1';
             }
         }
         return count;
