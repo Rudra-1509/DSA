@@ -2,7 +2,7 @@ class Solution {
 public:
     vector<vector<int>> floodFill(vector<vector<int>>& image, int sr, int sc, int color) {
         if(image[sr][sc]==color)    return image;
-        int clr=image[sr][sc];
+        int org_clr=image[sr][sc];
         queue<pair<int,int>> q;
         vector<vector<int>> nav={{0,1},{0,-1},{1,0},{-1,0}};
         q.push({sr,sc});
@@ -13,7 +13,7 @@ public:
                 int nr=r+nav[i][0];
                 int nc=c+nav[i][1];
                 if(nr>=0 && nr<image.size() && nc>=0 && nc<image[0].size() 
-                    && image[nr][nc]!=-1 && image[nr][nc]==clr){
+                    && image[nr][nc]!=-1 && image[nr][nc]==org_clr){
                     q.push({nr,nc});
                     image[nr][nc]=-1;
                 }
