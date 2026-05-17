@@ -5,35 +5,33 @@ public:
         return r>=0 && r<m && c>=0 && c<n;
     }
     int orangesRotting(vector<vector<int>>& grid) {
-        int m=grid.size(),n=grid[0].size();
+        int row=grid.size(),col=grid[0].size(),freshOranges=0,time=0;
         queue<pair<int,int>> q;
-        int freshOranges=0,time=0;
-        for(int i=0;i<m;i++){
-            for(int j=0;j<n;j++){
-                if(grid[i][j]==2)   
+        for(int i=0;i<row;i++){
+            for(int j=0;j<col;j++){
+                if(grid[i][j]==2)
                     q.push({i,j});
-                else if(grid[i][j]==1)
+                if(grid[i][j]==1)
                     freshOranges++;
             }
         }
-        while(!q.empty() && freshOranges){
-            int size=q.size();
+        while(freshOranges && !q.empty()){
+            int sz=q.size();
             time++;
-            while(size--){
+            for(int l=0;l<sz;l++){
                 auto [i,j]=q.front();q.pop();
-                for(auto &d:nav){
-                    int newi=i+d[0];
-                    int newj=j+d[1];
-                    if(isValid(m,n,newi,newj) && grid[newi][newj]==1){
-                        grid[newi][newj]=2;
+                for(int k=0;k<4;k++){
+                    int ni=i+nav[k][0];
+                    int nj=j+nav[k][1];
+                    if(isValid(row,col,ni,nj) && grid[ni][nj]==1){
+                        q.push({ni,nj});
+                        grid[ni][nj]=2;
                         freshOranges--;
-                        q.push({newi,newj});
                     }
                 }
             }
-
         }
         if(freshOranges)    return -1;
-        else    return time;
+        return time;
     }
 };
