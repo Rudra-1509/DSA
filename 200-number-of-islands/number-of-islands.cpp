@@ -5,32 +5,34 @@ public:
     bool isSafe(int i,int j){
         return i>=0 && i<r && j>=0 && j<c;
     }
-    void dfs(int i,int j,vector<vector<char>>& grid){
-        grid[i][j]='V';
-        for(int k=0;k<4;k++){
-            int newi=i+nav[k][0];
-            int newj=j+nav[k][1];
-            if(isSafe(newi,newj) && grid[newi][newj]=='1')
-                dfs(newi,newj,grid);
+    void bfs(vector<vector<char>>& grid,int i,int j,vector<vector<int>>& vis,queue<pair<int,int>>& q){
+        q.push({i,j});
+        vis[i][j]=1;
+        while(!q.empty()){
+            auto [rr,cc]=q.front();q.pop();
+            for(int k=0;k<4;k++){
+                int nr=rr+nav[k][0];
+                int nc=cc+nav[k][1];
+                if(isSafe(nr,nc) && !vis[nr][nc] && grid[nr][nc]=='1'){
+                    vis[nr][nc]=1;
+                    q.push({nr,nc});
+                }
+            }
         }
     }
     int numIslands(vector<vector<char>>& grid) {
         r=grid.size(),c=grid[0].size();
-        int count=0;
+        int ans=0;
+        queue<pair<int,int>> q;
+        vector<vector<int>> vis(r,vector<int>(c,0));
         for(int i=0;i<r;i++){
             for(int j=0;j<c;j++){
-                if(grid[i][j]=='1'){
-                count++;
-                dfs(i,j,grid);
+                if(!vis[i][j] && grid[i][j]=='1'){
+                    bfs(grid,i,j,vis,q);
+                    ans++;
                 }
             }
         }
-        for(int i=0;i<r;i++){
-            for(int j=0;j<c;j++){
-                if(grid[i][j]=='V')
-                    grid[i][j]='1';
-            }
-        }
-        return count;
+        return ans;
     }
 };
