@@ -1,40 +1,48 @@
 class Solution {
 public:
-    bool isSafe(int r,int c,vector<string>& board){
-        int r1=r,c1=c;
-        while(r1>=0){
-            if(board[r1][c]=='Q')   return false;
-            r1--;
+    bool isSafe(vector<string>& board,int row,int col){
+        int i=row,j=col;
+        while(j>=0){
+            if(board[row][j]=='Q')  return false;
+            j--;
         }
-        r1=r;
-        while(r1>=0 && c1>=0){
-            if(board[r1][c1]=='Q')   return false;
-            r1--;c1--;
+        while(i>=0){
+            if(board[i][col]=='Q')  return false;
+            i--;
         }
-        r1=r,c1=c;
-        while(r1>=0 && c1<board.size()){
-            if(board[r1][c1]=='Q')   return false;
-            r1--;c1++;
+        i=row;
+        j=col;
+        while(i>=0 && j>=0){
+            if(board[i][j]=='Q')    return false;
+            i--;
+            j--;
+        }
+        i=row;
+        j=col;
+        while(i<board.size() && j>=0){
+            if(board[i][j]=='Q')    return false;
+            i++;
+            j--;
         }
         return true;
     }
-    void helper(int r,int n,vector<vector<string>>& res,vector<string>& board){
-        if(r==n){
+    void helper(vector<string>& board,int ind,vector<vector<string>>& res){//ind->col
+        if(ind==board.size()){
             res.push_back(board);
             return;
         }
-        for(int j=0;j<n;j++){
-            if(isSafe(r,j,board)){
-                board[r][j]='Q';
-                helper(r+1,n,res,board);
-                board[r][j]='.';
+        for(int i=0;i<board.size();i++){ //i->row
+            if(isSafe(board,i,ind)){
+                board[i][ind]='Q';
+                helper(board,ind+1,res);
+                board[i][ind]='.';
             }
         }
     }
     vector<vector<string>> solveNQueens(int n) {
-        vector<string> board(n,string(n,'.'));
         vector<vector<string>> res;
-        helper(0,n,res,board);
+        vector<string> board(n,string(n,'.'));
+        helper(board,0,res);
         return res;
     }
 };
