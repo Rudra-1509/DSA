@@ -5,11 +5,11 @@ public:
             res.push_back(path);
             return;
         }
-        helper(nums,ind+1,res,path);
-
         path.push_back(nums[ind]);
         helper(nums,ind+1,res,path);
         path.pop_back();
+
+        helper(nums,ind+1,res,path);
     }
     vector<vector<int>> subsets(vector<int>& nums) {
         vector<vector<int>> res;
