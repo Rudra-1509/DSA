@@ -1,1 +1,1 @@
-<h2>minimum-size-subarray-sum Notes</h2><hr>[ Time taken: 3m 52s ]
+<h2>minimum-size-subarray-sum Notes</h2><hr>[ Time taken: 8m 18s ]
