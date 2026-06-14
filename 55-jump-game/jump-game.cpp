@@ -5,8 +5,8 @@ public:
         for(int i=0;i<n;i++){
             if(i> farthest) return false;
             farthest=max(farthest,i+nums[i]);
-            if(farthest==n-1)   return true;
+            if(farthest>=n-1)   return true;
         }
-        return true;
+        return false;
     }
 };
