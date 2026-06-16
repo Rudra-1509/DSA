@@ -22,7 +22,9 @@ public:
         vector<bool> visited(numCourses,false);
         vector<bool> path(numCourses,false);
         for(int i=0;i<numCourses;i++){
-            if(!dfs(i,adjList,visited,path))    return false;
+            if(!visited[i]){
+                if(!dfs(i,adjList,visited,path))    return false;
+            }
         }
         return true;
     }
