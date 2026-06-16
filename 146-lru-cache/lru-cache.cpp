@@ -1,70 +1,68 @@
+struct Node{
+    Node* prev;
+    int key;
+    int val;
+    Node* next;
+    Node(int x,int y){
+        prev=nullptr;next=nullptr;key=x;val=y;
+    }
+};
+
 class LRUCache {
 private:
-    struct ListNode{
-        ListNode* prev;
-        int key;
-        int val;
-        ListNode* next;
-        ListNode(int k,int dat){
-            prev=next=nullptr;
-            key=k;
-            val=dat;
-        }
-    };
-public:
-    unordered_map<int,ListNode*> mpp;
-    ListNode* dhead;
-    ListNode* dtail;
-    int cap;
-    void deleteLRU(){
-        ListNode* LRU=dtail->prev;
-        mpp.erase(LRU->key);
-        LRU->prev->next=LRU->next;
-        LRU->next->prev=LRU->prev;
-        delete LRU;
+    Node* dummyhead;
+    Node* dummytail;
+    int cap,size;
+    unordered_map<int,Node*> mpp;
+    void addToFront(Node* ptr){
+        ptr->prev=dummyhead;
+        ptr->next=dummyhead->next;
+        dummyhead->next=ptr;
+        ptr->next->prev=ptr;
     }
 
-    void addtoFront(ListNode* req){
-        if(req->prev && req->next){
-            req->prev->next=req->next;
-            req->next->prev=req->prev;
-        }
-        ListNode* nex=dhead->next;
-        dhead->next=req;
-        req->prev=dhead;
-        req->next=nex;
-        nex->prev=req;
+    void deleteFromList(Node* ptr){
+        ptr->prev->next=ptr->next;
+        ptr->next->prev=ptr->prev;
     }
+
+    void deleteLRU(){
+        Node* ptr=dummytail->prev;
+        deleteFromList(ptr);
+        mpp.erase(ptr->key);
+        size--;
+    }
+
+public:
     LRUCache(int capacity) {
-        cap = capacity;
-        dhead = new ListNode(-1, -1);
-        dtail = new ListNode(-1, -1);
-        dhead->next = dtail;
-        dtail->prev = dhead;
+        cap=capacity;size=0;
+        dummyhead=new Node(-1,-1);
+        dummytail=new Node(-1,-1);
+        dummyhead->next=dummytail;
+        dummytail->prev=dummyhead;
     }
     
     int get(int key) {
-        if(mpp.count(key)){
-            ListNode* req=mpp[key];
-            addtoFront(req);
-            return req->val;
-        }
-        else return -1;
+        if(! mpp.count(key))  return -1;
+        Node* ptr=mpp[key];
+        deleteFromList(ptr);
+        addToFront(ptr);
+        return ptr->val;
     }
     
     void put(int key, int value) {
         if(mpp.count(key)){
-            ListNode* req=mpp[key];
-            req->val=value;
-            addtoFront(req);
-        }
-        else{
-            if(mpp.size()==cap) {
+            Node* ptr=mpp[key];
+            ptr->val=value;
+            deleteFromList(ptr);
+            addToFront(ptr);
+        }else{
+            Node* ptr=new Node(key,value);
+            mpp[key]=ptr;
+            addToFront(ptr);
+            size++;
+            if(size>cap)
                 deleteLRU();
-            }
-            ListNode* newNode=new ListNode(key,value);
-            addtoFront(newNode);
-            mpp[key]=newNode;
         }
     }
 };
