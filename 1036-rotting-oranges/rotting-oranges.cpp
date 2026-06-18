@@ -8,7 +8,7 @@ public:
     int orangesRotting(vector<vector<int>>& grid) {
         m=grid.size(),n=grid[0].size();
         queue<pair<int,int>> q;
-        int freshOranges=0,time=0;
+        int freshOranges=0,time=-1;
         for(int i=0;i<m;i++){
             for(int j=0;j<n;j++){
                 if(grid[i][j]==2){
@@ -19,12 +19,13 @@ public:
                 }
             }
         }
-        while(!q.empty() && freshOranges){
+        if(freshOranges==0)     return 0;
+        while(!q.empty()){
             int sz=q.size();
             time++;
             for(int lev=0;lev<sz;lev++){
                 auto [i,j]=q.front();q.pop();
-                for(auto d:nav){
+                for(auto& d:nav){
                     int ni=d[0]+i,nj=d[1]+j;
                     if(isValid(ni,nj) && grid[ni][nj]==1){
                         grid[ni][nj]=2;
