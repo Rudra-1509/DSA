@@ -14,7 +14,7 @@ public:
     //     return ans;
     // }
 
-    int lowerBound(vector<int> arr,int x){
+    int lowerBound(vector<int>& arr,int x){
         int low=0,high=arr.size()-1;
         while(low<high){
             int mid=low+(high-low)/2;
