@@ -16,12 +16,11 @@ public:
         int start=0,end=0;
         for(int i=0;i<nums.size()-1;i++){
             if(nums[i+1]!=nums[i]+1){
-                helper(start,end,nums,res);
-                start=i+1;end=i+1;
+                helper(start,i,nums,res);
+                start=i+1;
             }
-            else    end++;
         }
-        helper(start,end,nums,res);
+        helper(start,nums.size()-1,nums,res);
         return res;
     }
 };
