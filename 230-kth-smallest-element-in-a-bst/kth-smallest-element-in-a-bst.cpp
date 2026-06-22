@@ -19,8 +19,8 @@ public:
             ans=root->val;
             return true;
         }  
-        if(inorder(root->right,k,ans))      return true;
-        return false;
+        return inorder(root->right,k,ans);
+        
     }
     int kthSmallest(TreeNode* root, int k) {
         int ans=-1;
