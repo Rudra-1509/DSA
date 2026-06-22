@@ -22,14 +22,11 @@ public:
 class Solution {
 public:
     Node* dfs(Node* node,unordered_map<Node*,Node*>& mpp){
+        if(mpp.count(node)) return mpp[node];
         Node* newNode=new Node(node->val);
         mpp[node]=newNode;
-        for(auto neigh:node->neighbors){
-            if(mpp.count(neigh))
-                (newNode->neighbors).push_back(mpp[neigh]);
-            else
-                (newNode->neighbors).push_back(dfs(neigh,mpp));
-        }
+        for(auto neigh:node->neighbors)
+            (newNode->neighbors).push_back(dfs(neigh,mpp));
         return newNode;
     }
 
