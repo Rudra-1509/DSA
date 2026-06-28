@@ -10,13 +10,14 @@ private:
 public:
     vector<vector<int>> kClosest(vector<vector<int>>& points, int k) {
         vector<vector<int>> res;
-        priority_queue<vector<int>,vector<vector<int>>,cmp> pq;
+        priority_queue<pair<long long,vector<int>>> pq;
         for(auto& point: points){
-            pq.push(point);
+            long long dist=1LL*point[0]*point[0]+1LL*point[1]*point[1];
+            pq.push({dist,point});
             if(pq.size()>k) pq.pop();
         }
         while(!pq.empty()){
-            res.push_back(pq.top());
+            res.push_back(pq.top().second);
             pq.pop();
         }
         return res;
