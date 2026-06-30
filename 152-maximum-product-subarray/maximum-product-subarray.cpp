@@ -1,12 +1,12 @@
 class Solution {
 public:
     int maxProduct(vector<int>& nums) {
-        int ans=INT_MIN,minprod=1,maxprod=1;
+        int ans=INT_MIN,minProd=1,maxProd=1;
         for(int x:nums){
-            if(x<0) swap(minprod,maxprod);
-            maxprod=max(x,maxprod*x);
-            minprod=min(x,minprod*x);
-            ans=max(maxprod,ans);
+            if(x<0) swap(minProd,maxProd);
+            minProd=min(x,minProd*x);
+            maxProd=max(x,maxProd*x);
+            ans=max(ans,maxProd);
         }
         return ans;
     }
