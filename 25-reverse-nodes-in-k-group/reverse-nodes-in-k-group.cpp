@@ -10,45 +10,30 @@
  */
 class Solution {
 public:
-    ListNode* rev(ListNode* head){ 
-        ListNode *prev=nullptr, *cur=head; 
-        while(cur){ 
-            ListNode* next=cur->next; 
-            cur->next=prev; 
-            prev=cur; 
-            cur=next; 
-            } 
-            return prev; 
-        }
     ListNode* reverseKGroup(ListNode* head, int k) {
-        if(!head)   return nullptr;
-        ListNode* cur=head;
-        for(int i=0;i<k;i++){
-            if(!cur)    return head;
-            cur=cur->next;
+        ListNode dummy(-1);
+        ListNode* prevGrpEnd=&dummy;
+        dummy.next=head;
+        ListNode* curGrpHead=head;
+        ListNode* kth=head;
+        while(1){
+            for(int i=0;i<k-1 && kth;i++)    kth=kth->next;
+            if(!kth)    break;
+            ListNode* nextGrpHead=kth->next;
+            ListNode* cur=curGrpHead;
+            ListNode* prev=prevGrpEnd;
+            while(cur!=nextGrpHead){
+                ListNode* next=cur->next;
+                cur->next=prev;
+                prev=cur;
+                cur=next;
+            }
+            prevGrpEnd->next=kth;
+            curGrpHead->next=nextGrpHead;
+            prevGrpEnd=curGrpHead;
+            curGrpHead=nextGrpHead;
+            kth=nextGrpHead;
         }
-        ListNode* curGrpHead=head; 
-        ListNode* prevGrpTail=nullptr;
-        cur=head; 
-        ListNode* newHead=nullptr; 
-        int grpMemCount=1; 
-        while(cur){ 
-            if(grpMemCount==k){ 
-                ListNode *nextGrpHead=cur->next; 
-                cur->next=nullptr; 
-                if(prevGrpTail) prevGrpTail->next=nullptr;
-                ListNode*revHead=rev(curGrpHead); 
-                if(prevGrpTail) prevGrpTail->next=revHead; 
-                else newHead=revHead; 
-                curGrpHead->next=nextGrpHead; 
-                prevGrpTail=curGrpHead; 
-                cur=curGrpHead; 
-                curGrpHead=nextGrpHead; 
-                grpMemCount=0; 
-            } 
-                cur=cur->next; 
-                grpMemCount++; 
-        } 
-        return newHead;
+        return dummy.next;
     }
 };
