@@ -11,11 +11,14 @@
  */
 class Solution {
 public:
-    bool isValidBST(TreeNode* root,long long maxi=LLONG_MAX,long long mini=LLONG_MIN) {
+    bool isValidBST(TreeNode* root) {
+        return helper(root,LLONG_MIN,LLONG_MAX);
+    }
+    bool helper(TreeNode* root,long long minLim,long long maxLim){
         if(!root)   return true;
-        if(!(root->val<maxi && root->val>mini)) return false;
-        bool leftside=isValidBST(root->left,root->val,mini);
-        bool rightside=isValidBST(root->right,maxi,root->val);
-        return leftside && rightside;
+        if(root->val<=minLim || root->val>=maxLim)    return false;
+        bool lhs=helper(root->left,minLim,root->val);
+        bool rhs=helper(root->right,root->val,maxLim);
+        return lhs && rhs;
     }
 };
