@@ -21,7 +21,7 @@ public:
             if(!kth)    break;
             ListNode* nextGrpHead=kth->next;
             ListNode* cur=curGrpHead;
-            ListNode* prev=prevGrpEnd;
+            ListNode* prev=nextGrpHead;
             while(cur!=nextGrpHead){
                 ListNode* next=cur->next;
                 cur->next=prev;
@@ -29,7 +29,6 @@ public:
                 cur=next;
             }
             prevGrpEnd->next=kth;
-            curGrpHead->next=nextGrpHead;
             prevGrpEnd=curGrpHead;
             curGrpHead=nextGrpHead;
             kth=nextGrpHead;
