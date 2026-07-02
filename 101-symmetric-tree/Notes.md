@@ -1,1 +1,1 @@
-<h2>symmetric-tree Notes</h2><hr>[ Time taken: 3m 28s ]
+<h2>symmetric-tree Notes</h2><hr>[ Time taken: 2m 40s ]
