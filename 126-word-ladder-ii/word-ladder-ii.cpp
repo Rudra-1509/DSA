@@ -1,61 +1,55 @@
 class Solution {
 public:
-    unordered_map<string,vector<string>> mpp;
-    vector<vector<string>> res;
+    unordered_map<string,vector<string>> parents;
+    unordered_map<string,int> distances;
     vector<string> path;
-
-    void dfs(string word,string beginWord){
+    vector<vector<string>> res;
+    void dfs(string word,const string& beginWord){
         path.push_back(word);
         if(word==beginWord){
             vector<string> temp=path;
             reverse(temp.begin(),temp.end());
             res.push_back(temp);
         }
-        for(string& parent: mpp[word])
-            dfs(parent,beginWord);
+        for(auto par:parents[word])
+            dfs(par,beginWord);
         path.pop_back();
     }
 
     vector<vector<string>> findLadders(string beginWord, string endWord, vector<string>& wordList) {
         unordered_set<string> s(wordList.begin(),wordList.end());
-        if(!s.count(endWord))   return {};
-
+        if(s.empty() || !s.count(endWord))  return {};
         queue<string> q;
-        unordered_map<string,int> dist;
-
         q.push(beginWord);
-        dist[beginWord]=0;
+        distances[beginWord]=0;
         bool found=false;
-        
         while(!q.empty() && !found){
+            vector<string> curLevel;
             int sz=q.size();
-            unordered_set<string> currentLev;
             while(sz--){
-                    string cur=q.front();q.pop();
-                    string parent=cur;
-                    for(int i=0;i<cur.size();i++){
-                        char old=cur[i];
-                        for(char ch='a'; ch<='z'; ch++){
-                            if(ch==old)     continue;
-                            cur[i]=ch;
-                            if(!s.count(cur))   continue;
-                            if(!dist.count(cur)){
-                                dist[cur]=dist[parent]+1;
-                                q.push(cur);
-                                currentLev.insert(cur);
-                                mpp[cur].push_back(parent);
-                            }
-                            else if(dist[cur]==dist[parent]+1){
-                                mpp[cur].push_back(parent);
-                            }
-                            if(cur==endWord)    found=true;
+                string cur=q.front();q.pop();
+                if(cur==endWord)        found=true;
+                curLevel.push_back(cur);
+                string newWord=cur;
+                for(int i=0;i<cur.size();i++){
+                    for(char c='a';c<='z';c++){
+                        if(c==cur[i])   continue;
+                        newWord[i]=c;
+                        if(!s.count(newWord))   continue;
+                        if(!distances.count(newWord)){
+                            parents[newWord].push_back(cur);
+                            distances[newWord]=distances[cur]+1;
+                            q.push(newWord);
                         }
-                        cur[i]=old;
+                        else if(distances[newWord]==distances[cur]+1)
+                            parents[newWord].push_back(cur);
                     }
+                    newWord[i]=cur[i];
                 }
-                for(auto& word: currentLev)
-                        s.erase(word);
+            }
+            for(auto& w:curLevel)       s.erase(w);
         }
+
         if(!found)  return {};
         dfs(endWord,beginWord);
         return res;
