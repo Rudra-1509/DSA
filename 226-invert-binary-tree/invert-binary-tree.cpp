@@ -13,10 +13,10 @@ class Solution {
 public:
     TreeNode* invertTree(TreeNode* root) {
         if(!root)   return nullptr;
-        TreeNode* leftSubTree=invertTree(root->left);
-        TreeNode* rightSubTree=invertTree(root->right);
-        root->left=rightSubTree;
-        root->right=leftSubTree;
+        TreeNode* lhs=invertTree(root->left);
+        TreeNode* rhs=invertTree(root->right);
+        root->left=rhs;
+        root->right=lhs;
         return root;
     }
 };
