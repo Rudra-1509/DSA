@@ -10,6 +10,8 @@ public:
             vector<string> temp=path;
             reverse(temp.begin(),temp.end());
             res.push_back(temp);
+            path.pop_back();
+            return;
         }
         for(auto par:parents[word])
             dfs(par,beginWord);
