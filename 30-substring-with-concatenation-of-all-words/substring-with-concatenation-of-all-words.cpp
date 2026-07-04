@@ -1,41 +1,39 @@
 class Solution {
 public:
     vector<int> findSubstring(string s, vector<string>& words) {
-        if(words.empty() || s.empty()) return {};
+        if(s.empty() || words.empty())  return {};
         vector<int> res;
+        int len=words[0].size(),n=s.size();
         unordered_map<string,int> mpp,window;
-        int totalwords=words.size(),len=words[0].size(),count=0;
-        for(string& word:words)
-            mpp[word]++;
+        for(auto& w:words)  mpp[w]++;
         for(int i=0;i<len;i++){
-            int left=i;
+            int left=i,count=0;
             window.clear();
-            count=0;
-            for(int right=i;right+len<=s.size();right+=len){
+            for(int right=left;right+len<=n;right+=len){
                 string word=s.substr(right,len);
                 if(!mpp.count(word)){
+                    left=right+len;
                     window.clear();
                     count=0;
-                    left=right+len;
                     continue;
                 }
                 window[word]++;
                 count++;
                 while(window[word]>mpp[word]){
-                    string temp=s.substr(left,len);
-                    window[temp]--;
-                    left+=len;
+                    string leftWord=s.substr(left,len);
+                    window[leftWord]--;
                     count--;
+                    left+=len;
                 }
-                if(totalwords==count){
+                while(count==words.size()){
                     res.push_back(left);
-                    string temp=s.substr(left,len);
-                    window[temp]--;
-                    left+=len;
+                    string leftWord=s.substr(left,len);
+                    window[leftWord]--;
                     count--;
+                    left+=len;
                 }
             }
         }
-        return res;   
+        return res;
     }
 };
