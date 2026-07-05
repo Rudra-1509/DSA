@@ -1,6 +1,6 @@
 class RandomizedSet {
 private:
-    vector<int> arr;
+    vector<int> nums;
     unordered_map<int,int> mpp;
 public:
     RandomizedSet() {
@@ -8,24 +8,25 @@ public:
     }
     
     bool insert(int val) {
-        if(mpp.count(val))  return  false;
-        arr.push_back(val);
-        mpp[val]=arr.size()-1;  
-        return true; 
+        if(mpp.count(val))  return false;
+        nums.push_back(val);
+        int ind=nums.size()-1;
+        mpp[val]=ind;
+        return true;
     }
     
     bool remove(int val) {
-        if(!mpp.count(val)) return false;
-        int curIdx=mpp[val],lastIdx=arr.size()-1;
-        arr[curIdx]=arr[lastIdx];
-        mpp[arr[lastIdx]]=curIdx;
+        if(!mpp.count(val))     return false;
+        int ind=mpp[val],last=nums.back();
+        nums[ind]=last;
+        mpp[last]=ind;
+        nums.pop_back();
         mpp.erase(val);
-        arr.pop_back();
         return true;
     }
     
     int getRandom() {
-        return arr[rand()%arr.size()];
+        return nums[rand()%nums.size()];
     }
 };
 
