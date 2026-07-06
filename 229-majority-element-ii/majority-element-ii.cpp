@@ -23,9 +23,9 @@ public:
             if(x==candidate1)   count1++;
             else if(x==candidate2)   count2++;
         }
-
-        if(count1>nums.size()/3)    res.push_back(candidate1);
-        if(count2>nums.size()/3)    res.push_back(candidate2);
+        int lim=nums.size()/3;
+        if(count1>lim)    res.push_back(candidate1);
+        if(count2>lim)    res.push_back(candidate2);
         return res;
     }
 };
