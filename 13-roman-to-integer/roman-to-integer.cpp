@@ -12,8 +12,9 @@ public:
         };
         int ans=0,n=s.size();
         for(int i=0;i<n;i++){
-            if(i<n-1 && mpp[s[i]]<mpp[s[i+1]])    ans+=-mpp[s[i]];
-            else    ans+=mpp[s[i]];
+            int cur=mpp[s[i]];
+            if(i<n-1 && cur<mpp[s[i+1]])    ans-=cur;
+            else    ans+=cur;
         }
         return ans;
     }
