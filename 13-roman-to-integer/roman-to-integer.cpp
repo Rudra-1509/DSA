@@ -11,11 +11,12 @@ public:
             {'M',1000}
         };
         int ans=0,n=s.size();
-        for(int i=0;i<n;i++){
+        for(int i=0;i<n-1;i++){
             int cur=mpp[s[i]];
-            if(i<n-1 && cur<mpp[s[i+1]])    ans-=cur;
+            if(cur<mpp[s[i+1]])    ans-=cur;
             else    ans+=cur;
         }
+        ans+=mpp[s[n-1]];
         return ans;
     }
 };
