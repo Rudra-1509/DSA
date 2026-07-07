@@ -17,17 +17,16 @@ public:
         // }
         // return ans;
 
-        sort(points.begin(),points.end(),[](auto a,auto b){
+        sort(points.begin(),points.end(),[](auto& a,auto& b){
             return a[1]<b[1];
         });
-        int end=points[0][1],n=points.size(),ans=1;
-        for(int i=1;i<n;i++){
-            if(points[i][0]>end){
+        int end=points[0][1],ans=1;
+        for(int i=1;i<points.size();i++){
+            if(end<points[i][0]){
                 ans++;
                 end=points[i][1];
             }
         }
         return ans;
-
     }
 };
