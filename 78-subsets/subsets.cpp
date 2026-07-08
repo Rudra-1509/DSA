@@ -1,20 +1,34 @@
 class Solution {
 public:
-    void helper(vector<int>& nums, int ind, vector<vector<int>>& res, vector<int>& path){
-        if(ind==nums.size()){
-            res.push_back(path);
-            return;
-        }
-        path.push_back(nums[ind]);
-        helper(nums,ind+1,res,path);
-        path.pop_back();
+    // void helper(vector<int>& nums, int ind, vector<vector<int>>& res, vector<int>& path){
+    //     if(ind==nums.size()){
+    //         res.push_back(path);
+    //         return;
+    //     }
+    //     path.push_back(nums[ind]);
+    //     helper(nums,ind+1,res,path);
+    //     path.pop_back();
 
-        helper(nums,ind+1,res,path);
-    }
+    //     helper(nums,ind+1,res,path);
+    // }
+    // vector<vector<int>> subsets(vector<int>& nums) {
+    //     vector<vector<int>> res;
+    //     vector<int> path;
+    //     helper(nums,0,res,path);
+    //     return res;
+    // }
     vector<vector<int>> subsets(vector<int>& nums) {
         vector<vector<int>> res;
         vector<int> path;
-        helper(nums,0,res,path);
+        int n=nums.size();
+        for(int mask=0;mask<(1<<n);mask++){
+            for(int i=0;i<n;i++){
+                if((1<<i) & mask)
+                    path.push_back(nums[i]);
+            }
+            res.push_back(path);
+            path.clear();
+        }
         return res;
     }
 };
