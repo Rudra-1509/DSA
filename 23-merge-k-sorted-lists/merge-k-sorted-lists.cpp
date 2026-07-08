@@ -45,15 +45,14 @@ public:
     // }
 
     struct cmp{
-        bool operator()(ListNode* a, ListNode*b){
+        bool operator()(ListNode* a,ListNode* b){
             return a->val>b->val;
         }
     };
-
     ListNode* mergeKLists(vector<ListNode*>& lists) { 
         priority_queue<ListNode*,vector<ListNode*>,cmp> pq;
-        for(auto ll:lists){
-            if(ll)  pq.push(ll);
+        for(int i=0;i<lists.size();i++){
+            if(lists[i])    pq.push(lists[i]);
         }
         ListNode dummy(-1);
         ListNode* ptr=&dummy;
@@ -61,7 +60,7 @@ public:
             ListNode* cur=pq.top();pq.pop();
             ptr->next=cur;
             ptr=ptr->next;
-            if(cur->next)   pq.push(cur->next);
+            if(cur->next)   pq.push(cur->next);   
         }
         return dummy.next;
     }
