@@ -8,52 +8,41 @@
  * };
  */
 class Codec {
+private:
+    const int null= 1001;
 public:
-
     // Encodes a tree to a single string.
     string serialize(TreeNode* root) {
-        if(!root) return "";
-        string ans="";
-        queue<TreeNode*> q;
-        q.push(root);
-        while(!q.empty()){
-            TreeNode* cur=q.front();
-            q.pop();
-            if(cur)     ans.append(to_string(cur->val)+",");
-            else        ans.append("#,");
-            if(cur){
-                q.push(cur->left);
-                q.push(cur->right);
-            }
+        if(!root)   return "#";
+        string lhs=serialize(root->left);        
+        string rhs=serialize(root->right);
+        string key=to_string(root->val)+','+lhs+','+rhs;
+        return key;
+    }
+    vector<int> seperate(string data){
+        vector<int> res;
+        stringstream ss(data);
+        string cur;
+        while(getline(ss,cur,',')){
+            if(cur=="#")    res.push_back(null);
+            else    res.push_back(stoi(cur));
         }
-        return ans; 
+        return res;
+    }
+    TreeNode* helper(vector<int>& arr,int& ind){
+        if(arr[ind]==null || ind>=arr.size())  return nullptr;
+        TreeNode* cur=new TreeNode(arr[ind]);
+        cur->left=helper(arr,++ind);
+        cur->right=helper(arr,++ind);
+        return cur;
     }
 
     // Decodes your encoded data to tree.
     TreeNode* deserialize(string data) {
-        if(data.size()==0)  return nullptr;
-        stringstream ss(data);
-        string str;
-        getline(ss,str,',');
-        queue<TreeNode*> q;
-        TreeNode* root=new TreeNode(stoi(str));
-        q.push(root);
-        while(!q.empty()){
-            TreeNode* cur=q.front();q.pop();
-
-            getline(ss,str,',');
-            if(str=="#")    cur->left=nullptr;
-            else            cur->left=new TreeNode(stoi(str));
-
-            getline(ss,str,',');
-            if(str=="#")    cur->right=nullptr;
-            else            cur->right=new TreeNode(stoi(str));
-
-            if(cur->left)   q.push(cur->left);
-            if(cur->right)   q.push(cur->right);
-        }
-        return root;
-    }   
+        vector<int> arr=seperate(data);
+        int ind=0;
+        return helper(arr,ind);
+    }
 };
 
 // Your Codec object will be instantiated and called as such:
