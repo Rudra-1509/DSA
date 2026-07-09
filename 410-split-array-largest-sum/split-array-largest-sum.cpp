@@ -1,12 +1,12 @@
 class Solution {
 public:
-    bool isValid(vector<int>& nums,int sum,int k){
-        int sticks=0,curSum=0;
-        for(int num:nums){
-            curSum+=num;
-            if(curSum>sum){
+    bool isValid(vector<int>& nums,int mid, int k){
+        int sticks=0,sum=0;
+        for(int x:nums){
+            sum+=x;
+            if(sum>mid){
                 sticks++;
-                curSum=num;
+                sum=x;
             }
         }
         return sticks+1<=k;
@@ -18,7 +18,7 @@ public:
         while(left<right){
             int mid=left+(right-left)/2;
             if(isValid(nums,mid,k)) right=mid;
-            else    left=mid+1;
+            else left=mid+1;
         }
         return left;
     }
