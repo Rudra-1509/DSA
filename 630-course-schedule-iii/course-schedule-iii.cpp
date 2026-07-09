@@ -8,16 +8,24 @@ public:
         priority_queue<int> pq;
         for(auto& course:courses){
             int dur=course[0],deadline=course[1];
-            if(curDay+dur<=deadline){
-                curDay+=dur;
-                pq.push(course[0]);
-            }
-            else if(!pq.empty() && dur<pq.top()){
-                int longest=pq.top();
+            // if(curDay+dur<=deadline){
+            //     curDay+=dur;
+            //     pq.push(course[0]);
+            // }
+            // else if(!pq.empty() && dur<pq.top()){
+            //     int longest=pq.top();
+            //     pq.pop();
+            //     curDay-=longest;
+            //     curDay+=dur;
+            //     pq.push(dur);
+            // }
+
+            curDay+=dur;
+            pq.push(dur);
+
+            while(curDay>deadline){
+                curDay-=pq.top();
                 pq.pop();
-                curDay-=longest;
-                curDay+=dur;
-                pq.push(dur);
             }
         }
         return pq.size();
