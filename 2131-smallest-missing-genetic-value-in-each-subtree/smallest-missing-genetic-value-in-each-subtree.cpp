@@ -1,11 +1,10 @@
 class Solution {
 public:
-    void dfs(int cur,vector<vector<int>>& children,unordered_set<int>& vis,unordered_set<int>& seen,vector<int>& nums){
-        if(vis.count(cur))   return;
-        vis.insert(cur);
-        seen.insert(nums[cur]);
+    void dfs(int cur,vector<vector<int>>& children,unordered_set<int>& visited,vector<int>& nums){
+        if(visited.count(nums[cur]))   return;
+        visited.insert(nums[cur]);
         for(int child:children[cur])
-            dfs(child,children,vis,seen,nums);
+            dfs(child,children,visited,nums);
     }
 
     vector<int> smallestMissingValueSubtree(vector<int>& parents, vector<int>& nums) {
@@ -15,14 +14,14 @@ public:
             if(nums[i]==1)  indexof1=i;
         }
         if(indexof1==-1)    return res;
-        unordered_set<int> seen,vis;
+        unordered_set<int> visited;
         int cur=indexof1,missing=1;
         vector<vector<int>> children(n);
         for(int i=1;i<n;i++)
             children[parents[i]].push_back(i);
         while(cur>=0){
-            dfs(cur,children,vis,seen,nums);
-            while(seen.count(missing))  
+            dfs(cur,children,visited,nums);
+            while(visited.count(missing))  
                 missing++;
             res[cur]=missing; 
             cur=parents[cur];
