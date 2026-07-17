@@ -12,7 +12,6 @@ public:
             if(main[i]!=subs[j])    return "#";
             i+=d;j+=d;
         }
-        // if(j!=n)
         if(d==1)
             return main.substr(i,m-i);
         else
