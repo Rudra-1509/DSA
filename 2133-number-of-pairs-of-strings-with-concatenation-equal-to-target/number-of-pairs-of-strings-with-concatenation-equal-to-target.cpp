@@ -1,6 +1,6 @@
 class Solution {
 public:
-    string minusSubstring(string main,string subs,int d){
+    string minusSubstring(string& main,string& subs,const int d){
         int i,j,m=main.size(),n=subs.size();
         if(d==1){
             i=0;j=0;
