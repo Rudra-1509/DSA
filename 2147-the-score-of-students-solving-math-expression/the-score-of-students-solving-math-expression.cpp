@@ -36,9 +36,9 @@ public:
         }
         summed+=multied;
         int res=0;
-        for(int i=0;i<answers.size();i++){
-            if(answers[i]==summed)  res+=5;
-            else if(dp[0][n-1].count(answers[i]))   res+=2;
+        for(int ans:answers){
+            if(ans==summed)  res+=5;
+            else if(dp[0][n-1].count(ans))   res+=2;
         }
         return res;
 
