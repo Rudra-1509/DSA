@@ -4,13 +4,13 @@ private:
     pair<int,int> latest;
 
     struct maxCmp{
-        bool operator()(pair<int,int>& a,pair<int,int>& b){
+        bool operator()(const pair<int,int>& a,const pair<int,int>& b){
             return a.second<b.second;
         }
     };
 
     struct minCmp{
-        bool operator()(pair<int,int>& a,pair<int,int>& b){
+        bool operator()(const pair<int,int>& a,const pair<int,int>& b){
             return a.second>b.second;
         }
     };
