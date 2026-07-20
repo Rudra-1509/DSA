@@ -8,6 +8,10 @@ public:
                 nums[i*n+j]=grid[i][j];
             }
         }
+        int rem=nums[0]%x;
+        for(int& num:nums){
+            if(num%x!=rem)  return -1;
+        }
         sort(nums.begin(),nums.end());
         int target=nums[nums.size()/2];
         for(int num:nums){
