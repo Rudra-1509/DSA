@@ -2,7 +2,6 @@ CREATE FUNCTION getNthHighestSalary(N INT) RETURNS INT
 BEGIN
   RETURN (
       # Write your MySQL query statement below.
-        SELECT (
             SELECT salary
             FROM(
                 SELECT 
@@ -14,7 +13,6 @@ BEGIN
             ) AS t
             WHERE t.rnk=N
             LIMIT 1
-        )
   );
 END
 
