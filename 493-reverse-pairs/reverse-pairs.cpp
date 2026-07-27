@@ -1,33 +1,48 @@
+class Fenwick {
+private:
+    int n;
+    vector<int> bit;
+public:
+    Fenwick(int n){
+        this->n=n;
+        bit.assign(n+1,0);
+    }
+    void update(int i,int delta){
+        for(;i<=n;i+=i&(-i)){
+            bit[i]+=delta;
+        }
+    }
+    int query(int i){
+        int ans=0;
+        for(;i>0;i-=i&(-i)){
+            ans+=bit[i];
+        }
+        return ans;
+    }
+};
 class Solution {
 public:
-    int revCount=0;
-    void merge(vector<int>& nums,int l,int mid,int r){
-        int p=l,q=mid+1;
-        for(;p<=mid;p++){
-            while(q<=r && (long long)nums[p]>2LL*nums[q])    q++;
-            revCount+=q-mid-1;    
-        }
-        vector<int> temp(r-l+1);
-        int i=l,j=mid+1,k=0;
-        while(i<=mid && j<=r){
-            if(nums[i] <= nums[j])  temp[k++]=nums[i++];
-            else                    temp[k++]=nums[j++];
-        }
-        while(i<=mid)   temp[k++]=nums[i++];
-        while(j<=r) temp[k++]=nums[j++];
-
-        for(int i=l;i<=r;i++)  nums[i]=temp[i-l];
-    }
-    void divide(vector<int>& nums,int l,int r){
-        if(l>=r) return;
-        int mid=l+(r-l)/2;
-        divide(nums,l,mid);
-        divide(nums,mid+1,r);
-
-        merge(nums,l,mid,r);
-    }
     int reversePairs(vector<int>& nums) {
-        divide(nums,0,nums.size()-1);
-        return revCount;
+        int n=nums.size(),ans=0;
+        vector<long long> temp;
+        for(int x:nums){
+            temp.push_back(x);
+            temp.push_back(2LL*x);
+        }
+        sort(temp.begin(),temp.end());
+        temp.erase(unique(temp.begin(),temp.end()),temp.end());
+        unordered_map<long long,int> mpp;
+        for(int i=0;i<temp.size();i++)
+            mpp[temp[i]]=i+1;
+        Fenwick bit(mpp.size());
+        for(int i=0;i<n;i++){
+            int rank2=mpp[nums[i]*2LL];
+            if(rank2>mpp.size())   continue;
+            int smallerEq=bit.query(rank2);
+            int greater=i-smallerEq;
+            ans+=greater;
+            bit.update(mpp[nums[i]],+1);           
+        }
+        return ans;
     }
 };
