@@ -11,9 +11,9 @@ public:
         for(int i=0;i<n;i++){
             if(i & 1)   rightOdd-=nums[i];
             else        rightEven-=nums[i];
-            int sum1=leftOdd+rightEven;
-            int sum2=leftEven+rightOdd;
-            if(sum1==sum2)  ans++;
+            int newOdd=leftOdd+rightEven;
+            int newEven=leftEven+rightOdd;
+            if(newOdd==newEven)  ans++;
             if(i & 1)   leftOdd+=nums[i];
             else        leftEven+=nums[i];
         }
