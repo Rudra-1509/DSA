@@ -9,6 +9,7 @@ public:
         int ans=min(n-l-1,r);
         for(int i=0;i<=l;i++){
             int j=lower_bound(arr.begin()+r,arr.end(),arr[i])-arr.begin();
+            if(j==n)    break;
             ans=min(ans,j-i-1);
         }
         return ans;
