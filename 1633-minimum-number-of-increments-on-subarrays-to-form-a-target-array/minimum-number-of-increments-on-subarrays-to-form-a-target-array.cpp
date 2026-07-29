@@ -12,7 +12,7 @@ struct node{
 class SegmentTree {
 private:
     node* root;
-    node* buildTree(int l,int r,vector<int>& arr){
+    node* buildTree(int l,int r,const vector<int>& arr){
         if(l>r) return nullptr;
         node* newNode=new node(l,r);
         if(l==r){
@@ -45,7 +45,7 @@ private:
     }
 
 public:
-    SegmentTree(vector<int>& arr){
+    SegmentTree(const vector<int>& arr){
         int n=arr.size();
         if(n==0)   root=nullptr;
         else       root=buildTree(0,n-1,arr);
