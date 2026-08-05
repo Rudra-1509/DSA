@@ -5,31 +5,35 @@ public:
         return (r>=0 && r<m && c>=0 && c<n);
     }
     int dfs(vector<vector<int>>& grid,int m,int n,int r,int c){
-        if(r<0 || r>=m || c<0 || c>=n || grid[r][c]==0)   return 0;
         grid[r][c]=0;
-        return    1+dfs(grid,m,n,r+1,c)+
-                    dfs(grid,m,n,r-1,c)+
-                    dfs(grid,m,n,r,c+1)+
-                    dfs(grid,m,n,r,c-1);
+        int sum=1;
+        for(auto d:nav){
+            int ni=r+d[0];
+            int nj=c+d[1];
+            if(isValid(ni,nj,m,n) && grid[ni][nj]==1){
+                sum+=dfs(grid,m,n,ni,nj);
+            }
+        }
+        return sum;
     }
     int bfs(vector<vector<int>>& grid,int m,int n,int r,int c){
         queue<pair<int,int>> q;
+        int ans=0;
         q.push({r,c});
         grid[r][c]=0;
-        int area=1;
         while(!q.empty()){
             pair<int,int> cur=q.front();q.pop();
-            for(int i=0;i<4;i++){
-                int newr=cur.first+nav[i][0];
-                int newc=cur.second+nav[i][1];
-                if(isValid(newr,newc,m,n) && grid[newr][newc]==1){
-                    q.push({newr,newc});
-                    grid[newr][newc]=0;
-                    area++;
+            ans++;
+            for(auto d:nav){
+                int ni=cur.first+d[0];
+                int nj=cur.second+d[1];
+                if(isValid(ni,nj,m,n) && grid[ni][nj]==1){
+                    q.push({ni,nj});
+                    grid[ni][nj]=0;
                 }
             }
         }
-        return area;
+        return ans;
     }
     int maxAreaOfIsland(vector<vector<int>>& grid) {
         int m=grid.size(),n=grid[0].size();
@@ -37,7 +41,7 @@ public:
         for(int i=0;i<m;i++){
             for(int j=0;j<n;j++){
                 if(grid[i][j]==1){
-                    int area=bfs(grid,m,n,i,j);
+                    int area=dfs(grid,m,n,i,j);
                     maxArea=max(maxArea,area);
                 }
             }
