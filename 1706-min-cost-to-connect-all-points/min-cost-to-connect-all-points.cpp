@@ -14,7 +14,7 @@ public:
             int y=points[ind][1];
             if(vis[ind])    continue;
             vis[ind]=true;
-            ans+=minCost[ind];
+            ans+=curCost;
             for(int i=0;i<n;i++){
                 if(vis[i])  continue;
                 int cost=abs(points[i][0]-x)+abs(points[i][1]-y);
