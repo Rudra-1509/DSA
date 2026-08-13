@@ -6,6 +6,8 @@ public:
             dp[e[0]][e[1]]=e[2];
             dp[e[1]][e[0]]=e[2];
         }
+        for(int i=0;i<n;i++)
+            dp[i][i]=0;
         for(int k=0;k<n;k++){
             for(int i=0;i<n;i++){
                 for(int j=0;j<n;j++){
