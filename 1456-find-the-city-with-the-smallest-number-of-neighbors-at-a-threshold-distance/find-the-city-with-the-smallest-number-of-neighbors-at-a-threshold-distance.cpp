@@ -3,8 +3,9 @@ public:
     int findTheCity(int n, vector<vector<int>>& edges, int distanceThreshold) {
         vector<vector<int>> dp(n,vector<int>(n,INT_MAX));
         for(auto& e:edges){
-            dp[e[0]][e[1]]=e[2];
-            dp[e[1]][e[0]]=e[2];
+            int u=e[0],v=e[1],w=e[2];
+            dp[u][v]=min(dp[u][v],w);
+            dp[v][u]=min(dp[v][u],w);
         }
         for(int i=0;i<n;i++)
             dp[i][i]=0;
