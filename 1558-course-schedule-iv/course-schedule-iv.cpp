@@ -2,8 +2,6 @@ class Solution {
 public:
     vector<bool> checkIfPrerequisite(int n, vector<vector<int>>& prerequisites, vector<vector<int>>& queries) {
         vector<vector<bool>> dp(n,vector<bool>(n,false));
-        for(int i=0;i<n;i++)
-            dp[i][i]=true;
         for(auto& p:prerequisites){
             int i=p[0],j=p[1];
             dp[i][j]=true;
