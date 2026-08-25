@@ -1,5 +1,5 @@
 # Write your MySQL query statement below
-WITH sales_with_season AS
+WITH sales_with_season AS  #step1
 (
 SELECT *,
 CASE
@@ -10,14 +10,14 @@ CASE
 END AS season
 from sales
 )
-SELECT
+SELECT   #step 4
     season,
     category,
     total_quantity,
     total_revenue
 FROM
 (
-SELECT
+SELECT     #step 3
     season,
     category,
     total_quantity,
@@ -29,7 +29,7 @@ SELECT
                  category ASC
     ) AS rnk
 FROM (
-SELECT
+SELECT   #step 2
     s.season,
     p.category,
     SUM(quantity) AS total_quantity,
