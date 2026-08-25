@@ -1,0 +1,47 @@
+# Write your MySQL query statement below
+WITH sales_with_season AS
+(
+SELECT *,
+CASE
+    WHEN MONTH(sale_date) IN (12,1,2) THEN 'Winter'
+    WHEN MONTH(sale_date) IN (3,4,5) THEN 'Spring'
+    WHEN MONTH(sale_date) IN (6,7,8) THEN 'Summer'
+    ELSE 'Fall'
+END AS season
+from sales
+)
+SELECT
+    season,
+    category,
+    total_quantity,
+    total_revenue
+FROM
+(
+SELECT
+    season,
+    category,
+    total_quantity,
+    total_revenue,
+    ROW_NUMBER() OVER (
+        PARTITION BY season
+        ORDER BY total_quantity DESC,
+                 total_revenue DESC,
+                 category ASC
+    ) AS rnk
+FROM (
+SELECT
+    s.season,
+    p.category,
+    SUM(quantity) AS total_quantity,
+    SUM(quantity*price) AS total_revenue
+FROM sales_with_season s
+INNER JOIN products p
+ON s.product_id=p.product_id
+GROUP BY s.season,p.category
+) as t
+) AS u
+WHERE u.rnk=1
+
+
+
+
